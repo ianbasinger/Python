@@ -46,12 +46,12 @@ n = text_file.write(weatherstatus+"° Fahrenheit" +'\n')
 text_file.close()
 
 msg = MIMEText(location +'\n' + time +'\n' + info + '\n' + weatherstatus + '\n' + "This was an automated email sent to you for weather updates, have a good day!")
-me = 'ianbasingerweather@gmail.com'
-you = 'ianbasinger1@gmail.com'
+me = 'sender@mail.com'
+you = 'recipient@mail.com'
 msg['Subject'] = 'Daily Python Weather Report'
 msg['From'] = me
 msg['To'] = you
 s = smtplib.SMTP_SSL('smtp.gmail.com', 465)
-s.login("ianbasingerweather@gmail.com", "yvlyswnrqibjsnzo")
+s.login("sender@mail.com", "passwordhere, if using 2FA or MFA need to get app passcode")
 s.send_message(msg)
 s.quit()
