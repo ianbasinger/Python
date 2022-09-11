@@ -38,13 +38,6 @@ city = "Reno"
 city = city+" weather"
 weather(city)
 
-text_file = open("PythonWeatherReport.txt", "w")
-n = text_file.write(location +'\n')
-n = text_file.write(time +'\n')
-n = text_file.write(info +'\n')
-n = text_file.write(weatherstatus+"° Fahrenheit" +'\n')
-text_file.close()
-
 msg = MIMEText(location +'\n' + time +'\n' + info + '\n' + weatherstatus + '\n' + "This was an automated email sent to you for weather updates, have a good day!")
 me = 'sender@mail.com'
 you = 'recipient@mail.com'
