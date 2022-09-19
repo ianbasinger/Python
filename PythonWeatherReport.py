@@ -2,6 +2,7 @@
 # Burner account is for security reasons, and has a different password etc. from my main accounts. I don't want this program to have access to my primary gmail or information
 # It will just send the email from my burner account to my main gmail account
 # This can be automated using Windows Task Scheduler and set a specific time and condition to run the script, create batch file for the scheduler to run
+# Not the cleanest since it uses global variables and the scope of those could be improved
 
 from cgitb import text
 from tkinter import N
