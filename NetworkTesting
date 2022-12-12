@@ -1,0 +1,51 @@
+## Import the necessary modules
+import socket
+import subprocess
+
+## Test the loopback interface
+try:
+  s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+  s.bind(("127.0.0.1", 0))
+  s.listen(1)
+  print("Success: Loopback interface works")
+except socket.error:
+  print("Error: Loopback interface is not working")
+
+## Get the client device's IP address and default gateway
+ip_address = socket.gethostbyname(socket.gethostname())
+default_gateway = socket.gethostbyname("gateway.local")
+
+## Check if the client IP address begins in 169.254 and return an error if it does
+if ip_address.startswith("169.254"):
+  print("Error: You have an APIPA address and this is link-local only, check your DHCP server")
+else:
+  print("Success: DHCP server is working")
+
+## Test DNS name resolution of public servers
+public_servers = ["google.com", "github.com", "twitter.com"]
+
+for server in public_servers:
+  try:
+    ip = socket.gethostbyname(server)
+    print("Success: DNS name resolution works for " + server)
+  except socket.error:
+    print("Error: DNS name resolution does not work for " + server)
+
+## Conduct a ping to public servers
+public_servers = ["google.com", "github.com", "twitter.com"]
+
+for server in public_servers:
+  try:
+    subprocess.check_output(["ping", "-c", "1", server])
+    print("Success: Ping to " + server + " works")
+  except subprocess.CalledProcessError:
+    print("Error: Ping to " + server + " does not work")
+
+## Conduct a traceroute to a public server
+public_server = "google.com"
+
+try:
+  subprocess.check_output(["traceroute", public_server])
+  print("Success: Traceroute to " + public_server + " works")
+except subprocess.CalledProcessError:
+  print("Error: Traceroute to " + public_server + " does not work")
