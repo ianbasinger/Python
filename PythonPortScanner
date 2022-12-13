@@ -1,0 +1,44 @@
+## This is a function dedicated to scanning a IP address or given hostname for specific ports to see if they are open, think of like nmap
+## You can scan 1 port, but you can also define a range of ports for it to loop through
+## Don't go around scanning random ports of public servers without prior approval. Use this for your internal network or labbing only
+## Common ports: 80 HTTP 443 HTTPS 53 DNS - these are often open by default
+
+import socket
+## Import socket requirement
+
+def port_is_open(host, port, protocol):
+  ## Port is open function
+    if protocol == "tcp":
+      ## If it's defined as TCP, then do:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    elif protocol == "udp":
+      ## If it's UDP then do:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    else:
+        raise ValueError("Invalid protocol specified. Must be 'tcp' or 'udp'.")
+        ## If it's neither TCP or UDP, then it's invalid and won't work, throw an error
+
+    sock.settimeout(5)
+    ## Timeout
+    result = sock.connect_ex((host, port))
+    ## Start a connection to $host, $port
+    sock.close()
+    ## Close the connection
+    return result == 0
+    ## Return the value
+
+def check_ports(host, start_port, end_port, protocol):
+  ## Check ports in range specified on a host
+    for port in range(start_port, end_port + 1):
+        if port_is_open(host, port, protocol):
+            print(f"{protocol.upper()} port {port} is open on host {host}")
+        else:
+            print(f"{protocol.upper()} port {port} is closed on host {host}")
+
+## Example usage
+host = "example.com"
+start_port = 1
+end_port = 10000
+protocol = "tcp"
+check_ports(host, start_port, end_port, protocol)
+## Calling the full function
