@@ -1,0 +1,37 @@
+## This is a Python script that checks if a java.exe Windows Process is running or not
+## The java.exe process in question is a modded minecraft server I'm locally hosting, that had a habit of crashing at odd hours (think 1-2 AM according to logs and events)
+## To mitigate this and make it highly available, this will check for this specific situation and to respond accordingly
+## If java.exe is running, do nothing, if it's not running then log the information and attempt to reboot the server
+## Script loops every 15 minutes
+
+## Needed imports
+import os
+import time
+import datetime
+
+
+##The file path to the log file
+LOG_FILE_PATH = r"C:\Users\ianba\Desktop\Create_Server.log"
+
+##The file path to the .bat file that starts the server
+SERVER_START_SCRIPT_PATH = r"C:\Users\ianba\Desktop\Create-Server\SERVER-START.bat"
+
+##The name of the Windows process to check for
+PROCESS_NAME = "java.exe"
+
+##The time interval in minutes between each check
+CHECK_INTERVAL = 15
+
+while True:
+  ##Check if the process is running
+  if os.system(f"tasklist | find /i {PROCESS_NAME}") != 0:
+    ##If the process is NOT running, log it and start the server
+    current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print ("Server java.exe not running...", current_time)
+    with open(LOG_FILE_PATH, "a") as log_file:
+      log_file.write(f"{current_time}: {PROCESS_NAME} not running\n")
+    os.system(SERVER_START_SCRIPT_PATH)
+    print("Server is being started...", current_time)
+
+  ##Wait for the specified time interval before checking again
+  time.sleep(CHECK_INTERVAL * 60)
