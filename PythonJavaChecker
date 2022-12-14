@@ -11,10 +11,10 @@ import datetime
 
 
 ##The file path to the log file
-LOG_FILE_PATH = r"C:\Users\ianba\Desktop\Create_Server.log"
+LOG_FILE_PATH = r"LOG PATH, SPECIFY HERE"
 
 ##The file path to the .bat file that starts the server
-SERVER_START_SCRIPT_PATH = r"C:\Users\ianba\Desktop\Create-Server\SERVER-START.bat"
+SERVER_START_SCRIPT_PATH = r"SERVERPATH, SPECIFY HERE"
 
 ##The name of the Windows process to check for
 PROCESS_NAME = "java.exe"
