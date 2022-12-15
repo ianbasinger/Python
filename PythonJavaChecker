@@ -1,11 +1,11 @@
-## Needed imports
+##Imports
 import os
 import datetime
 import time
 import subprocess
 
 def check_java_process():
-    ##Check if the java.exe process is running - this is used for a locally hosted server I'm running
+    ##Check if the java.exe process is running
     for process in os.popen("tasklist"):
         if "java.exe" in process:
             return True
@@ -21,14 +21,14 @@ def log_to_file(message):
 while True:
     ##Check if the java.exe process is running
     if check_java_process():
-        print("Java process is running")
+        print("Java process is running at" + str(datetime.datetime.now()))
     else:
-        print("Java process is not running")
-        ##Log the current date and time to the log file
+        print("Java process is not running" + str(datetime.datetime.now()))
+        # Log the current date and time to the log file
         log_message = "Java process not running at " + str(datetime.datetime.now()) + "\n"
         log_to_file(log_message)
-        ##Open the .bat that will reboot the server
-        subprocess.call(r'environmentvariable')
+        # Open the SERVER-START.bat file in a new window
+        subprocess.Popen(r'environmentvariable', shell=True)
 
     ##Sleep for 15 minutes before checking again
     time.sleep(15 * 60)
