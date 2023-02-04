@@ -1,6 +1,6 @@
 ## This is a function dedicated to scanning a IP address or given hostname for specific ports to see if they are open, think of like nmap
 ## You can scan 1 port, but you can also define a range of ports for it to loop through
-## Don't go around scanning random ports of public servers without prior approval. Use this for your internal network or labbing only
+## Meant for labbing or private environements only
 ## Common ports: 80 HTTP 443 HTTPS 53 DNS - these are often open by default
 
 import socket
@@ -27,18 +27,21 @@ def port_is_open(host, port, protocol):
     return result == 0
     ## Return the value
 
-def check_ports(host, start_port, end_port, protocol):
-  ## Check ports in range specified on a host
-    for port in range(start_port, end_port + 1):
-        if port_is_open(host, port, protocol):
-            print(f"{protocol.upper()} port {port} is open on host {host}")
-        else:
-            print(f"{protocol.upper()} port {port} is closed on host {host}")
+def check_ports(host, start_port, end_port):
+    protocols = ["tcp", "udp"]
+    port_counter = 0
+    for protocol in protocols:
+        for port in range(start_port, end_port + 1):
+            port_counter += 1
+            if port_counter % 500 == 0:
+                print("No open ports found in the last 500 ports.")
+            if port_is_open(host, port, protocol):
+                print(f"{protocol.upper()} port {port} is open on host {host}")
+
 
 ## Example usage
-host = "example.com"
+host = "127.0.0.1 aka EXAMPLE, but in any name.com or IP address here"
 start_port = 1
 end_port = 10000
-protocol = "tcp"
-check_ports(host, start_port, end_port, protocol)
+check_ports(host, start_port, end_port)
 ## Calling the full function
