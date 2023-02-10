@@ -1,4 +1,4 @@
-## This is a function dedicated to scanning a IP address or given hostname for specific ports to see if they are open, think of like nmap
+## This is a function dedicated to scanning a IP address or given hostname for specific ports to see if they are open, think of like netstat command
 ## You can scan 1 port, but you can also define a range of ports for it to loop through
 ## Meant for labbing or private environements only
 ## Common ports: 80 HTTP 443 HTTPS 53 DNS - these are often open by default
