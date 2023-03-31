@@ -1,3 +1,7 @@
+## This script will run tracert on a destination IP, 10 times over, and then print out a quick analysis of the end results
+## This was made as I needed something beyond ping -t for network troubleshooting. To figure out if things are failing at a specific hop (basic tracert usage)
+## And I didn't want to have to keep repeating tracert runs while doing network troubleshooting
+
 import subprocess
 import time
 # Needed imports
