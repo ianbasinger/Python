@@ -1,0 +1,52 @@
+import subprocess
+import time
+# Needed imports
+
+output_file = r"C:\YourPath\tracert-results.txt"
+# Output file path for a .txt file with the tracert results
+dest_ip = input("Enter destination IP: ")
+# Destination IP that user will input for tracert
+
+for i in range(10):
+# Loop 10 times, or perform 10 tracerts
+    with open(output_file, "a") as outfile:
+        outfile.write(f"Doing tracert at {time.strftime('%Y-%m-%d %H:%M:%S')}\n")
+        # Write the timestamp for each one
+        subprocess.run(f"tracert {dest_ip}", stdout=outfile, shell=True)
+    print(f"Tracert for {dest_ip} completed at {time.strftime('%Y-%m-%d %H:%M:%S')}")
+    # Print out timestamp
+    time.sleep(1)
+    with open(output_file, "r") as infile:
+        last_line = infile.readlines()[-1]
+    if "Trace complete." in last_line:
+    # Let us know it's done
+        break
+# End of the tracert loop
+# Beyond here the rest of the code is for quick analysis of the 10 tracert runs we did previously
+
+with open(output_file, 'r') as file:
+    lines = file.readlines()
+    # Open the tracert-results.txt file that has the tracert data
+
+num_failed = 0
+num_success = 0
+
+for line in lines:
+    if ' 1 ' in line:
+        if 'Destination host unreachable' in line or 'Request timed out' in line:
+            num_failed += 1
+        else:
+            num_success += 1
+
+total_attempts = num_failed + num_success
+success_percent = num_success / total_attempts * 100 if total_attempts > 0 else 0
+failure_percent = num_failed / total_attempts * 100 if total_attempts > 0 else 0
+
+# Here we want to calculate the successfull and failed tracert attempts
+
+print(f"Success rate: {success_percent:.2f}%")
+print(f"Failure rate: {failure_percent:.2f}%")
+print(f"Total attempts: {total_attempts}")
+print(f"Done...")
+
+# Print out the results to console
